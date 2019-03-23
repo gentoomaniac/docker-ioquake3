@@ -38,75 +38,22 @@ services:
 
 ## server configs
 
-### server.cfg
-
-```
-seta rconPassword "supersecret"
-g_motd "Welcome to my Quake3 server"
-set bot_enable 1
-set dedicated 1
-set g_gametype 3
-set sv_pure 0
-set bot_minplayers 4
-set g_allowvote 1
-```
-
-### ctf.cfg
-
-Capture the Flag
-
-```
-g_motd "Welcome to my Quake3 server: ***now capture the flag***"
-sv_maxclients 12
-
-g_gametype 4
-g_weaponrespawn 15
-g_inactivity 3000
-g_forcerespawn 0
-
-seta timelimit 15
-seta fraglimit 40
-set d1 "map q3ctf1 ; set nextmap vstr d2"
-set d2 "map q3ctf2 ; set nextmap vstr d3"
-set d3 "map q3ctf3 ; set nextmap vstr d4"
-set d4 "map q3ctf4 ; set nextmap vstr d1"
-vstr d1
-```
-
-### td.cfg
-
-Team Deathmatch
-
-```
-g_motd "Welcome to my Quake3 server: ***now team deathmatch***"
-sv_maxclients 12
-
-g_gametype 3
-g_weaponrespawn 15
-g_inactivity 3000
-g_forcerespawn 0
-
-seta timelimit 15
-seta fraglimit 40
-set d1 "map q3dm17 ; set nextmap vstr d2"
-set d2 "map q3dm6 ; set nextmap vstr d3"
-set d3 "map q3dm16 ; set nextmap vstr d4"
-set d4 "map q3dm19 ; set nextmap vstr d1"
-vstr d1
-```
+[here](configs/)
 
 ## Further links
 
 ### Get Quake III data files
 
 [Quake III on GOG.com](https://www.gog.com/game/quake_iii_gold)
+
 [Quake III on Steam](https://store.steampowered.com/app/2200/Quake_III_Arena/)
 
 ### Make Quake 3 look beautiful
 
 [Here](https://swissmacuser.ch/how-you-want-to-run-quake-iii-arena-in-2018-with-high-definition-graphics-120-fps-on-5k-resolution/) is a great gide on how to make Quake III look beautiful.
+
 Make sure you only take a resolution that your screen supports and don't change the settings in-game.
 
 ### Server administration
 
-On [Quake2World](https://www.quake3world.com/q3guide/servers.html) you'll find all you need to now.
+On [Quake3World](https://www.quake3world.com/q3guide/servers.html) you'll find all you need to now.
