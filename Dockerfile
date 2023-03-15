@@ -1,32 +1,33 @@
-FROM alpine:latest
+FROM ubuntu:kinetic
 
-ENV USER_AGENT "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update && apt install -y curl make git build-essential unzip 	libsdl2-dev
 
-RUN apk add --no-cache curl make git build-base unzip
-
-RUN addgroup ioquake3 && \
-    adduser -h /ioquake3 -s /bin/false -G ioquake3 -D ioquake3
-
-COPY data/ /tmp
-COPY quake3-latest-pk3s.zip /tmp
-RUN  chown ioquake3.ioquake3 -R /tmp/*
+RUN groupadd ioquake3 && \
+    useradd -d /ioquake3 -m -s /bin/false -g ioquake3 ioquake3
 
 USER ioquake3
 
-RUN curl -A "${USER_AGENT}" https://raw.githubusercontent.com/ioquake/ioq3/master/misc/linux/server_compile.sh -o /ioquake3/server_compile.sh && \
-    curl -A "${USER_AGENT}" https://raw.githubusercontent.com/ioquake/ioq3/master/misc/linux/start_server.sh -o /ioquake3/start_server.sh
+ENV MAKEOPTS -j8
 
-RUN cd /ioquake3 && \
-    yes | sh server_compile.sh
+RUN git clone --depth 1 https://github.com/ioquake/ioq3.git /ioquake3/src
+RUN cd /ioquake3/src && \
+    make all && \
+    mv /ioquake3/src/build/release-linux-x86_64/* /ioquake3/ && \
+    rm -rf /ioquake3/src
 
-RUN mv /tmp/baseq3/* /ioquake3/ioquake3/baseq3/ && \
-    mv /tmp/missionpack/* /ioquake3/ioquake3/missionpack/
+COPY --chown=ioquake3:ioquake3 data/baseq3 /ioquake3/baseq3
+COPY --chown=ioquake3:ioquake3 data/missionpack /ioquake3/missionpack
 
-RUN cd /tmp && \
-    unzip quake3-latest-pk3s.zip && \
-    mv quake3-latest-pk3s/baseq3/* /ioquake3/ioquake3/baseq3/ && \
-    mv quake3-latest-pk3s/missionpack/* /ioquake3/ioquake3/missionpack/
+COPY --chown=ioquake3:ioquake3 quake3-latest-pk3s.zip /tmp
+RUN unzip /tmp/quake3-latest-pk3s.zip -d /ioquake3 && \
+    rm /tmp/quake3-latest-pk3s.zip && \
+    mv /ioquake3/quake3-latest-pk3s/baseq3/* /ioquake3/baseq3/ && \
+    mv /ioquake3/quake3-latest-pk3s/missionpack/* /ioquake3/missionpack/
 
+COPY --chown=ioquake3:ioquake3 start_server.sh /ioquake3/
+
+WORKDIR /ioquake3
 EXPOSE 27960/udp
 
 ENTRYPOINT ["/bin/sh", "/ioquake3/start_server.sh"]
