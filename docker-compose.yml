@@ -1,0 +1,14 @@
+version: "3.2"
+
+services:
+  ioquake:
+    image: ioquake3
+    container_name: ioquake3
+    command: ["+exec", "server.cfg", "+exec", "td.cfg"]
+    ports:
+        - 27960:27960/udp
+    volumes:
+        - "/MY/FULL/PATH/ioquake-server/configs/server.cfg:/ioquake3/baseq3/server.cfg:ro"
+        - "/MY/FULL/PATH/ioquake-server/configs/td.cfg:/ioquake3/baseq3/td.cfg:ro"
+        - "/MY/FULL/PATH/ioquake-server/configs/ctf.cfg:/ioquake3/baseq3/ctf.cfg:ro"
+        - "/MY/FULL/PATH/ioquake-server/configs/dm.cfg:/ioquake3/baseq3/dm.cfg:ro"
