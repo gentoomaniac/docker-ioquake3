@@ -1,4 +1,4 @@
-FROM ubuntu:kinetic
+FROM ubuntu:jammy
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt install -y curl make git build-essential unzip 	libsdl2-dev
